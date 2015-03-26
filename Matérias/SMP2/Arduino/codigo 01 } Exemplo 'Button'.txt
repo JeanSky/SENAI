@@ -1,0 +1,24 @@
+int buttonPin = 2;     // Criação de uma variável inteira de valor 2;
+int ledPin =  13;      // Criação de uma variável inteira de valor 13;
+int buttonState = 0;   // Criação de uma variável inteira de valor 0;
+
+void setup() { //Início da função setup
+
+  pinMode(ledPin, OUTPUT);   // Configuração do pino(ledPin) como saída;
+  pinMode(buttonPin, INPUT);    // Configuração do pino(buttonPin) como entrada;
+  digitalWrite(buttonPin, HIGH); // Escreve no pino(buttonPin) o valor HIGH(1);
+}
+
+void loop(){ // Início da função loop
+
+  buttonState = digitalRead(buttonPin); // Guarda o valor lido no pino(buttonPin) na variável buttonState;
+
+  if (buttonState == HIGH) { // Comando que checa valor armazenado na variável
+  // Se o valor for igual a um(HIGH):
+    digitalWrite(ledPin, LOW);  // Desliga o LED; 
+  } 
+  else { // Se não, se o valor for igual a zero(LOW):
+
+    digitalWrite(ledPin, HIGH);  // Acende o LED
+  }
+}

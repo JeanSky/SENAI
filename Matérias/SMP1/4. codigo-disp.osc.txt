@@ -1,0 +1,244 @@
+$INCLUDE(REG51.INC)
+LCDCMDO 			EQU 0FF40H ;ENDERECO DE COMANDO DO LCD
+LCDDADO			EQU 0FF41H ;ENDERECO DE DADO DO LCD
+
+
+           		LJMP MAIN
+
+;INICIO DA ROTINA DE INICIALIZACAO DO LCD
+DELAY:			MOV R0,#99H; (move o valor de 100h para o registrador R0)
+DELAY2:        MOV R1,#99H; (move o valor de 100h para o registrador R1)
+DELAY1:			DJNZ R1, DELAY1; (decrementa o valor de R1, e se for igual a 0 ele pula para a próxima linha, senão se for diferente de 0 ele executa a função)   
+					DJNZ R0, DELAY2; (decrementa o valor de R0, e se for igual a 0 ele pula para a próxima linha, senão se for diferente de 0 ele executa a função)   
+					RET; (volta a execução do programa para a linha abaixo do call)
+
+DELAY4:			MOV R0,#90H; (move o valor de 90h para o registrador R0)
+DELAY5:        MOV R1,#90H; (move o valor de 90h para o registrador R1)
+DELAY6:			DJNZ R1, DELAY6; (decrementa o valor de R1, e se for igual a 0 ele pula para a próxima linha, senão se for diferente de 0 ele executa a função)   
+					DJNZ R0, DELAY5; (decrementa o valor de R0, e se for igual a 0 ele pula para a próxima linha, senão se for diferente de 0 ele executa a função)   
+					RET; (volta a execução do programa para a linha abaixo do call)
+
+DELAY7:			MOV R0,#085H; (move o valor de 90h para o registrador R0)
+DELAY8:        MOV R1,#085H; (move o valor de 90h para o registrador R1)
+DELAY9:			DJNZ R1, DELAY9; (decrementa o valor de R1, e se for igual a 0 ele pula para a próxima linha, senão se for diferente de 0 ele executa a função)   
+					DJNZ R0, DELAY8; (decrementa o valor de R0, e se for igual a 0 ele pula para a próxima linha, senão se for diferente de 0 ele executa a função)   
+					RET; (volta a execução do programa para a linha abaixo do call)
+
+DELAYS3:			MOV R0,#100H; (move o valor de 90h para o registrador R0)
+DELAYS2:       MOV R1,#100H; (move o valor de 90h para o registrador R1)
+DELAYS:			DJNZ R1, DELAYS; (decrementa o valor de R1, e se for igual a 0 ele pula para a próxima linha, senão se for diferente de 0 ele executa a função)   
+					DJNZ R0, DELAYS2; (decrementa o valor de R0, e se for igual a 0 ele pula para a próxima linha, senão se for diferente de 0 ele executa a função)   
+					RET; (volta a execução do programa para a linha abaixo do call)
+
+
+BUZZER:        SETB P3.0; (seta o pino P3.0 em 1)
+	          	CALL DELAY7; (chama a sub-rotina delay7)
+	           	CLR P3.0; (limpa o valor do pino P3.0)
+	           	CALL DELAY7; (chama a sub-rotina delay7)
+	         	RET; (volta a execução do programa para a linha abaixo do call)
+
+
+
+INITLCD:			MOV A,#39H ;DEFINE INTERFACE LCD DE 8 BITS/2 LINHAS/MATRIX
+;7x5
+	            CALL CMDOLCD ;CHAMA ROTINA ENVIA COMANDO AO LCD
+            	MOV A,#06H ;DESLOCA CURSOR A DIREITA
+         	   CALL CMDOLCD ;CHAMA ROTINA ENVIA COMANDO AO LCD
+      	      MOV A,#0CH ;MENSAGEM APARENTE E CURSOR DESLIGADO
+   	         CALL CMDOLCD ;CHAMA ROTINA ENVIA COMANDO AO LCD
+	            CALL CLEARLCD ;CHAMA ROTINA LIMPA LCD
+					RET ;FIM DA ROTINA DE INICIALIZACAO DO LCD
+
+;INICIO DA ROTINA ENVIA DADO AO LCD
+
+DADOLCD:			PUSH DPH
+					PUSH DPL
+					MOV DPTR,#LCDDADO
+					MOVX @DPTR,A ;ENVIA DADO AO LCD
+					MOV R4,#20H ;
+DELAYDADOLCD:  DJNZ R4,DELAYDADOLCD ;DELAY DE DADO DO LCD
+					POP DPL
+					POP DPH
+					RET ;FIM DA ROTINA ENVIA DADO AO LCD
+
+;INICIO DA ROTINA ENVIA COMANDO AO LCD
+
+CMDOLCD:       PUSH DPH
+					PUSH DPL
+					MOV DPTR,#LCDCMDO
+					MOVX @DPTR,A ;ENVIA COMANDO AO LCD
+					MOV R4,#20H ;
+DELAYCMDOLCD:  DJNZ R4,DELAYCMDOLCD ;DELAY DE COMANDO DO LCD
+					POP DPL
+					POP DPH
+					RET ;FIM DA ROTINA ENVIA COMANDO AO LCD
+
+;INICIO DA ROTINA LIMPA LCD
+CLEARLCD:		PUSH DPH ;
+					PUSH DPL ;SALVA O CONTEUDO DO REGISTRADOR DPTR
+					MOV A,#01H ;LIMPA LCD E RETORNA CURSOR A POSICAO 80H
+					MOV DPTR,#LCDCMDO
+					MOVX @DPTR,A ;ENVIA COMANDO AO LCD
+					MOV R5,#06H ;
+DELAYCLRLCD5: 	MOV R4,#0FFH ;
+DELAYCLRLCD4:	DJNZ R4,DELAYCLRLCD4 ;
+					DJNZ R5,DELAYCLRLCD5 ;DELAY DE COMANDO CLEAR DO LCD
+					POP DPL ;
+					POP DPH ;RESTAURA O CONTEUDO DO REGISTRADOR DPTR
+					RET ;FIM DA ROTINA LIMPA LCD
+
+;INICIO DA ROTINA ESCREVE MENSAGEM NO LCD
+
+MENSAGE:			MOV A,#00H ;
+					MOVC A,@A+DPTR ;BUSCA MENSAGEM LETRA A LETRA
+					CJNE A,#00H,MOSTRA ;VERIFICA FIM DE MENSAGEM,SE NAO,DESVIA
+;PARA O ROTULO "MOSTRA"
+					JMP ENDMENS ;DESVIA PARA O ROTULO "ENDMENS"
+MOSTRA:			CALL DADOLCD ;CHAMA A ROTINA ENVIA DADO AO LCD
+					INC DPTR
+					JMP MENSAGE ;DESVIA PARA O ROTULO "MENSAGE"
+ENDMENS:			RET ;FIM DA ROTINA ESCREVE MENSAGEM NO LCD
+
+;INICIO DO PROGRAMA PRINCIPAL
+
+MAIN: 			MOV IE,#05H ;DESABILITA TODAS AS INTERRUPCOES
+					MOV TCON,#05H
+					MOV SP,#2FH ;DEFINE ENDERECO INICIAL DA PILHA
+					MOV PSW,#00H ;HABILITA BANCO 0 DE REGISTRADORES
+					CALL INITLCD ;CHAMA ROTINA DE INICIALIZACAO DO LCD
+					MOV P1,#00H; (move o valor de 00h para o pino P1)
+					CLR P3.0; (limpa o valor do pino P3.0)
+			
+			
+INICIO:			JNB P3.3, LIGA1; (se o valor no pino P3.3 for 0 ele executa a instrução, mas se for 1 ele pula para a próxima linha)
+					JNB P3.4, LIGAX; (se o valor no pino P3.4 for 0 ele executa a instrução, mas se for 1 ele pula para a próxima linha)
+					JNB P3.5, LIGAS; (se o valor no pino P3.5 for 0 ele executa a instrução, mas se for 1 ele pula para a próxima linha)
+					SETB P1.0; (seta o pino P1.0 em 1)
+					CALL DELAY; (chama a sub-rotina delay)
+					CLR P1.0; (limpa o valor do pino P1.0)
+					CALL DELAY; (chama a sub-rotina delay)
+					MOV A,#83H ;
+					CALL CMDOLCD ;POSICIONA CURSOR DO LCD
+					MOV DPTR,#MENSAGE01 ;
+					CALL MENSAGE ;
+					CALL DELAY
+					CALL CLEARLCD
+					CALL DELAY
+LOOP:				MOV A,#83H ;
+					CALL CMDOLCD ;POSICIONA CURSOR DO LCD
+					MOV DPTR,#MENSAGE01 ;
+					CALL MENSAGE ;
+					JMP INICIO; (pula para o label inicio)
+
+
+
+
+
+
+
+MENSAGE01:  	DB "MONITORANDO"
+					DB 00H
+MENSAGE02:  	DB "SETOR1"
+					DB 00H
+MENSAGE03:  	DB "SETOR2"
+					DB 00H
+MENSAGE04:  	DB "SETOR3"
+					DB 00H
+MENSAGE05:		DB "ALARME"
+					DB 00H
+MENSAGE06:		DB "                 "
+					DB 00H
+
+
+LIGAS:			JMP LIGA3
+LIGAX:			JMP LIGA2
+			
+					
+LIGA1:			SETB P1.1; (seta o valor do pino P1.1)
+					CALL DELAY4; (chama a sub-rotina delay)
+					SETB P1.0; (seta o valor 1 no pino P1.0)
+					CALL DELAY4; (chama a sub-rotina delay)
+					CLR P1.0; (limpa o valor do pino P1.0)
+					CALL BUZZER; (chama a sub-rotina buzzer)
+					JNB P3.2,DESL; (se o valor no pino P3.2 for 0 ele executa a instrução, mas se for 1 ele pula para a próxima linha) 
+					CALL CLEARLCD
+					MOV A,#0C4H ;
+					CALL CMDOLCD ;POSICIONA CURSOR DO LCD
+					MOV DPTR,#MENSAGE02 ;
+					CALL MENSAGE ;
+					MOV A,#084H ;
+					CALL CMDOLCD ;POSICIONA CURSOR DO LCD
+					MOV DPTR,#MENSAGE05 ;
+					CALL MENSAGE ;
+					CALL DELAYS3
+					CALL CLEAR1
+					CALL DELAYS3
+					JMP LIGA1; (pula para o label LIGA1)
+
+LIGA2:			SETB P1.2; (seta o valor do pino P1.2)
+					SETB P1.0; (seta o valor 1 no pino P1.0)
+					CALL DELAY4; (chama a sub-rotina delay)
+					CLR P1.0; (limpa o valor do pino P1.0)
+					CALL DELAY4; (chama a sub-rotina delay)
+					CALL BUZZER; (chama a sub-rotina buzzer) 
+					JNB P3.2,DESL
+					CALL CLEARLCD
+					MOV A,#094H
+					CALL CMDOLCD ;POSICIONA CURSOR DO LCD
+					MOV DPTR,#MENSAGE03 ;
+					CALL MENSAGE ;
+					MOV A,#084H ;
+					CALL CMDOLCD ;POSICIONA CURSOR DO LCD
+					MOV DPTR,#MENSAGE05 ;
+					CALL MENSAGE ;
+					CALL DELAYS3
+					CALL CLEAR2
+					CALL DELAYS3
+					JMP LIGA2; (pula para o label Liga2)
+
+LIGA3: 			SETB P1.3; (seta o valor do pino P1.3)
+					SETB P1.0; (seta o valor 1 no pino P1.0)
+					CALL DELAY4; (chama a sub-rotina delay)
+					CLR P1.0; (limpa o valor do pino P1.0)
+					CALL DELAY4; (chama a sub-rotina delay)
+					CALL BUZZER; (chama a sub-rotina buzzer)
+					JNB P3.2,DESL; (se o valor no pino P3.2 for 0 ele executa a instrução, mas se for 1 ele pula para a próxima linha) 
+					CALL CLEARLCD
+					MOV A,#0D4H ;
+					CALL CMDOLCD ;POSICIONA CURSOR DO LCD
+					MOV DPTR,#MENSAGE04 ;
+					CALL MENSAGE ;		
+					MOV A,#084H ;
+					CALL CMDOLCD ;POSICIONA CURSOR DO LCD
+					MOV DPTR,#MENSAGE05 ;
+					CALL MENSAGE ;	
+					CALL DELAYS3
+					CALL CLEAR3
+					CALL DELAYS3				
+					JMP LIGA3; (pula para o label liga3)
+
+DESL:				CALL CLEARLCD
+					CLR P1.1; (Limpa o valor do pino P1.1)
+					CLR P1.2; (Limpa o valor do pino P1.2)
+					CLR P1.3; (Limpa o valor do pino P1.3)
+					JMP INICIO; (pula para o label inicio)                                  
+
+CLEAR1:			MOV A,#0C0H ;
+					CALL CMDOLCD ;POSICIONA CURSOR DO LCD
+					MOV DPTR,#MENSAGE06 ;
+					CALL MENSAGE ;	
+					RET
+					
+CLEAR2:			MOV A,#90H ;
+					CALL CMDOLCD ;POSICIONA CURSOR DO LCD
+					MOV DPTR,#MENSAGE06 ;
+					CALL MENSAGE ;	
+               RET
+               
+CLEAR3:			MOV A,#0D0H ;
+					CALL CMDOLCD ;POSICIONA CURSOR DO LCD
+					MOV DPTR,#MENSAGE06 ;
+					CALL MENSAGE ;	
+               RET
+                        
+					END ;FIM DO PROGRAMA PRINCIPAL

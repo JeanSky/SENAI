@@ -1,0 +1,61 @@
+------código1:------
+
+int BOTAO = 0; //Cria uma variável inteira "BOTAO" e define o valor de 0.
+int RELE = 0; //Cria uma variável inteira "RELE" e define o valor de 0.
+int PORTA_B = 2; //Cria uma variável inteira "PORTA_B" e define o valor de 2.
+int PORTA_L = 12; //Cria uma variável inteira "PORTA_L" e define o valor de 12.
+int PORTA_RR = 8; // Cria uma variável inteira "PORTA_RR" e define o valor de 8.
+
+void setup(){ //Função de inicialização do programa do Arduino(executada somente uma vez na inicialização do programa).
+  pinMode(PORTA_B, INPUT); //Define a variável "PORTA_B" que correspponde ao pino 2 como uma entrada de dados.
+  digitalWrite(PORTA_B,1); //Define o valor HIGH para o pino 2, funcionando como um pull up interno.
+  pinMode(PORTA_L, OUTPUT); //Define a variável "PORTA_L" que correspponde ao pino 12 como uma saída de dados.
+  digitalWrite(PORTA_L,0); //Define o valor LOW para o pino 12, para acionar o pino.
+  pinMode(PORTA_RR, OUTPUT); //Define a variável "PORTA_RR" que correspponde ao pino 8 como uma saída de dados.
+  digitalWrite(PORTA_RR,0); //Define o valor LOW para o pino 8, para desativar o pino.
+}
+
+void loop() { //Função que será repetida durante a execução do programa.
+  BOTAO = digitalRead (PORTA_B); //Atribui o valor lido no pino 2(PORTA_B) para a variável "BOTAO".
+  if (BOTAO==0) //Faz uma análise comparando o valor da variável BOTAO com o valor 0, e se for igual, executa as instruções abaixo.
+{
+
+RELE= !RELE; //Lê o valor da variável RELE, inverte o mesmo, e armazena o novo valor na variável.
+digitalWrite (PORTA_L,RELE); //Define o valor do pino 12(PORTA_L) para o valor da variável RELE.
+digitalWrite (PORTA_RR,RELE); //Define o valor do pino 8(PORTA_RR) para o valor da variável RELE.
+delay (100); //Pausa de 100 milissegungos 
+}
+delay (100); //Pausa de 100 milissegundos
+}
+
+------código2:-----
+
+int BOTAO = 0; //Cria uma variável inteira "BOTAO" e define o valor de 0.
+int RELE = 0; //Cria uma variável inteira "RELE" e define o valor de 0.
+int LED = 1; //Cria uma variável inteira "LED" e define o valor de 1.
+int PORTA_B = 2; //Cria uma variável inteira "PORTA_B" e define o valor de 2.
+int PORTA_L = 12; //Cria uma variável inteira "PORTA_L" e define o valor de 12.
+int PORTA_RR = 8; // Cria uma variável inteira "PORTA_RR" e define o valor de 8.
+
+void setup(){ //Função de inicialização do programa do Arduino(executada somente uma vez na inicialização do programa).
+  pinMode(PORTA_B, INPUT); //Define a variável "PORTA_B" que correspponde ao pino 2 como uma entrada de dados.
+  digitalWrite(PORTA_B,1); //Define o valor HIGH para o pino 2, funcionando como um pull up interno.
+  pinMode(PORTA_L, OUTPUT); //Define a variável "PORTA_L" que correspponde ao pino 12 como uma saída de dados.
+  digitalWrite(PORTA_L,1); //Define o valor LOW para o pino 12, para acionar o pino.
+  pinMode(PORTA_RR, OUTPUT); //Define a variável "PORTA_RR" que correspponde ao pino 8 como uma saída de dados.
+  digitalWrite(PORTA_RR,0); //Define o valor LOW para o pino 8, para desativar o pino.
+}
+
+void loop() { //Função que será repetida durante a execução do programa.
+  BOTAO = digitalRead (PORTA_B); //Atribui o valor lido no pino 2(PORTA_B) para a variável "BOTAO".
+  if (BOTAO==0) //Faz uma análise comparando o valor da variável BOTAO com o valor 0, e se for igual, executa as instruções abaixo.
+{
+
+RELE= !RELE; //Lê o valor da variável RELE, inverte o mesmo, e armazena o novo valor na variável.
+LED = !LED; //Lê o valor da variável LED, inverte o mesmo, e armazena o novo valor na variável.
+digitalWrite (PORTA_L,LED); //Define o valor do pino 12(PORTA_L) para o valor da variável LED.
+digitalWrite (PORTA_RR,RELE); //Define o valor do pino 8(PORTA_RR) para o valor da variável RELE.
+delay (100); //Pausa de 100 milissegungos 
+}
+delay (100); //Pausa de 100 milissegundos
+}

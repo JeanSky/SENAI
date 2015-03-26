@@ -1,0 +1,59 @@
+$INCLUDE (REG51.INC); (inclui a biblioteca do registrador 8051)
+
+			LJMP MAIN; (salto para o label "main")
+			
+DELAY:	MOV R0,#90H; (move o valor de 90h para o registrador R0)
+DELAY2:  MOV R1,#90H; (move o valor de 90h para o registrador R1)
+DELAY1:	DJNZ R1, DELAY1; (decrementa o valor de R1, e se for igual a 0 ele pula para a próxima linha, senão se for diferente de 0 ele executa a função)   
+			DJNZ R0, DELAY2; (decrementa o valor de R0, e se for igual a 0 ele pula para a próxima linha, senão se for diferente de 0 ele executa a função)   
+			RET; (volta a execução do programa para a linha abaixo do call)
+
+DELAY4:	MOV R0,#100H; (move o valor de 90h para o registrador R0)
+DELAY5:  MOV R1,#100H; (move o valor de 90h para o registrador R1)
+DELAY6:	DJNZ R1, DELAY6; (decrementa o valor de R1, e se for igual a 0 ele pula para a próxima linha, senão se for diferente de 0 ele executa a função)   
+			DJNZ R0, DELAY5; (decrementa o valor de R0, e se for igual a 0 ele pula para a próxima linha, senão se for diferente de 0 ele executa a função)   
+			RET; (volta a execução do programa para a linha abaixo do call)
+
+			
+MAIN:
+			MOV P1,#00H; (move o valor de 00h para o pino P1)
+			
+INICIO:	JNB P3.3, LIGA1; (se o valor no pino P3.3 for 0 ele executa a instrução, mas se for 1 ele pula para a próxima linha)
+			JNB P3.4, LIGA2; (se o valor no pino P3.4 for 0 ele executa a instrução, mas se for 1 ele pula para a próxima linha)
+			JNB P3.5, LIGA3; (se o valor no pino P3.5 for 0 ele executa a instrução, mas se for 1 ele pula para a próxima linha)
+			SETB P1.0; (seta o pino P1.0 em 1)
+			CALL DELAY; (chama a sub-rotina delay)
+			CLR P1.0; (limpa o valor do pino P1.0)
+			CALL DELAY; (chama a sub-rotina delay)
+			JMP INICIO; (pula para o label inicio)
+
+LIGA1:	SETB P1.1; (seta o valor do pino P1.1)
+			CALL DELAY4; (chama a sub-rotina delay)
+			SETB P1.0; (seta o valor 1 no pino P1.0)
+			CALL DELAY4; (chama a sub-rotina delau)
+			CLR P1.0; (limpa o valor do pino P1.0)
+			JNB P3.2,DESL; (se o valor no pino P3.2 for 0 ele executa a instrução, mas se for 1 ele pula para a próxima linha)
+			JMP LIGA1; (pula para o label LIGA1)
+
+LIGA2:	SETB P1.2; (seta o valor do pino P1.2)
+			SETB P1.0; (seta o valor 1 no pino P1.0)
+			CALL DELAY4; (chama a sub-rotina delay)
+			CLR P1.0; (limpa o valor do pino P1.0)
+			CALL DELAY4; (chama a sub-rotina delay)
+			JNB P3.2,DESL; (se o valor no pino P3.2 for 0 ele executa a instrução, mas se for 1 ele pula para a próxima linha)
+			JMP LIGA2; (pula para o label Liga2)
+			
+LIGA3: 	SETB P1.3; (seta o valor do pino P1.3)
+			SETB P1.0; (seta o valor 1 no pino P1.0)
+			CALL DELAY4; (chama a sub-rotina delay)
+			CLR P1.0; (limpa o valor do pino P1.0)
+			CALL DELAY4; (chama a sub-rotina delay)
+			JNB P3.2,DESL; (se o valor no pino P3.2 for 0 ele executa a instrução, mas se for 1 ele pula para a próxima linha)
+			JMP LIGA3; (pula para o label liga3)
+			
+DESL:		CLR P1.1; (Limpa o valor do pino P1.1)
+			CLR P1.2; (Limpa o valor do pino P1.2)
+			CLR P1.3; (Limpa o valor do pino P1.3)
+			JMP INICIO; (pula para o label inicio)                                  
+			
+			END; (finaliza o programa)

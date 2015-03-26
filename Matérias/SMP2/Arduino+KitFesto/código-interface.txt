@@ -1,0 +1,142 @@
+//9 entradas (6 sensores e 3 botões)
+//6 saídas (9 atuadores)
+
+int esensor1 = 1;
+int esensor2 = 2;
+int esensor3 = 3;
+int esensor4 = 4;
+int esensor5 = 5;
+int esensor6 = 6;
+int ssensor1 = 10;
+int ssensor2 = 11;
+int ssensor3 = 12;
+int ssensor4 = 13;
+int smotor1 = 7;
+int smotor2 = 8;
+int valsen1 = 0;
+int valsen2 = 0;
+int valsen3 = 0;
+int valsen4 = 0;
+int valsen5 = 0;
+int valsen6 = 0;
+int on = 7;
+int off = 8;
+int reset = 9;
+int ligado = 0;
+int pistao1 = 0;
+int pistao2 = 0;
+int pistao3 = 0;
+
+
+void setup()
+{
+	pinMode(esensor1, INPUT);
+	digitalWrite(esensor1, LOW);
+	pinMode(esensor2, INPUT);
+	digitalWrite(esensor2, LOW);	
+	pinMode(esensor3, INPUT);
+	digitalWrite(esensor3, LOW);
+	pinMode(esensor4, INPUT);
+	digitalWrite(esensor4, LOW);
+	pinMode(esensor5, INPUT);
+	digitalWrite(esensor5, LOW);
+	pinMode(esensor6, INPUT);
+	digitalWrite(esensor6, LOW);
+	pinMode(ssensor1, OUTPUT);
+	digitalWrite(ssensor1, LOW);
+	pinMode(ssensor2, OUTPUT);
+	digitalWrite(ssensor2, LOW);
+	pinMode(ssensor3, OUTPUT);
+	digitalWrite(ssensor3, LOW);
+	pinMode(ssensor4, OUTPUT);
+	digitalWrite(ssensor4, LOW);
+	pinMode(on, INPUT);
+	digitalWrite(on, HIGH);
+	pinMode(off, INPUT);
+	digitalWrite(off, HIGH);
+	analogWrite(smotor1, LOW);	
+	analogWrite(smotor2, LOW);
+}
+
+void loop()
+{
+	if (on == 0)
+		ligado == 1;
+	else if (off == 0)	
+		ligado == 0;
+
+	if (ligado == 1);
+{
+
+		analogWrite(smotor1, HIGH);
+		analogWrite(smotor2, HIGH);
+		digitalRead(valsen1, esensor1);
+		digitalRead(valsen2, esensor1);	
+		digitalRead(valsen3, esensor1);	
+		digitalRead(valsen4, esensor1);	
+		digitalRead(valsen5, esensor1);	
+		digitalRead(valsen6, esensor1);	
+	
+}
+	
+	
+	
+		if (valsen1 == 1 && valsen3 == 0)
+			{	
+				pistao1 = pistao1++;
+			}
+		if (valsen2 == 1)
+			{	
+				pistao2 = pistao2++;		
+			}
+		if (valsen1 == 1 && valsen3 == 1)
+			{
+				pistao3 = pistao3++;	
+			}
+	
+	
+
+		if (pistao1 <> 0)
+		{
+			delay(5000);
+			digitalWrite(ssensor1, HIGH); //aciona o pistão 1
+			pistao1 == pistao1--;
+		}
+		if (pistao2 <> 0 && pistao1 == 0)	
+		{
+			delay(6000);
+			digitalWrite(ssensor2, HIGH); //aciona o pistão 2
+			digitalWrite(ssensor1, LOW); //recua o pistão 1
+			pistao2 == pistao2--;
+		}
+		else if (pistao 2 <> 0 && pistao1 <> 0)
+		{	
+			delay(500);
+			digitalWrite(ssensor1, LOW); //recua o pistão 1
+			digitalWrite(ssensor2, HIGH); //aciona o pistão 2
+			pistao2 == pistao2--;
+		}
+		if (pistao3 <> 0)
+		{
+			delay(7000);
+			digitalWrite(ssensor3, HIGH); //aciona o pistão 3
+			digitalWrite(ssensor1, LOW); //recua o pistão 1		
+			digitalWrite(ssensor2, LOW); //recua o pistão 2
+			pistao3 == pistao3--;
+		}
+		if (valsen4 == 1 && pistao1 == 0)
+		{
+			digitalWrite(ssensor1, LOW);
+		}
+		if (valsen5 == 1 && pistao2 == 0)
+		{
+			digitalWrite(ssensor2, LOW);
+		}
+		if (valsen6 == 1 && pistao6 == 0)
+		{
+			digitalWrite(ssensor4, HIGH);
+		}
+	
+
+}
+}	

@@ -1,0 +1,42 @@
+int motor = 7;
+int botao = 3;
+int liga = 0;
+int led  = 9;
+
+void setup(){
+  pinMode(motor, OUTPUT);
+  pinMode(botao, INPUT);
+  digitalWrite(botao, HIGH);
+  pinMode(led, OUTPUT);
+}
+
+void loop(){
+  liga = digitalRead(botao);
+  if (liga == LOW)
+  {
+    digitalWrite(motor, HIGH);
+    digitalWrite(led, HIGH);
+  }
+  else 
+  {
+    digitalWrite(motor, LOW);
+    digitalWrite(led, LOW);
+  }
+}
+
+_______________________________________
+int motor = 6;
+int potenciometro = 0;
+int liga = 0;
+
+
+void setup(){
+  pinMode(motor, OUTPUT);
+
+}
+
+void loop(){
+  liga = analogRead(potenciometro);
+  analogWrite(motor, liga/4);
+  Serial.println(liga/4);
+}

@@ -1,0 +1,68 @@
+#include <LiquidCrystal.h>
+
+
+int botaorearme = 7;
+int sensor1 = 8;
+int sensor2 = 9;
+    int rearme = 0;
+    int asetor1 = 0;
+    int asetor2 = 0;
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+void setup()
+{
+  lcd.begin(16,2);
+  pinMode(botaorearme, INPUT);
+  digitalWrite(botaorearme, HIGH);
+  pinMode(sensor1, INPUT);
+  digitalWrite(sensor1, HIGH);
+  pinMode(sensor2, INPUT);
+  digitalWrite(sensor2, HIGH);
+}
+
+void loop()
+{
+    rearme = digitalRead(botaorearme);
+    asetor1 = digitalRead(sensor1);
+    asetor2 = digitalRead(sensor2);
+
+  
+  if (rearme == 0)
+  {
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print(" MONITORANDO! ");
+    delay(1000);
+    lcd.clear();
+    delay(1000);
+  
+}
+  if (asetor1 == 0)
+  {
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print(" Alarme ");
+    lcd.setCursor(0,1);
+    lcd.print(" Setor 1 ");
+    delay(1000);
+    lcd.setCursor(0,1);
+    lcd.print("                ");
+    delay(1000);
+
+  }
+ if (asetor2 == 0)
+  {
+   lcd.clear();
+   lcd.setCursor(0,0);
+   lcd.print(" Alarme ");
+   lcd.setCursor(0,1);
+   lcd.print(" Setor 2 ");
+
+   delay(1000);
+   lcd.setCursor(0,1);
+   lcd.print("                ");
+   delay(1000);
+  }
+  
+  
+}

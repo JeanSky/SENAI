@@ -1,0 +1,130 @@
+int buttonPin = 2;     // Criação de uma variável inteira de valor 2;
+int buttonState = 0;   // Criação de uma variável inteira de valor 0;
+int ledPin1 = 5;       // Criação de uma variável inteira de valor 5;
+int ledPin2 = 7;       // Criação de uma variável inteira de valor 7;
+int ledPin3 =  9;      // Criação de uma variável inteira de valor 9;
+int ledPin4 = 11;      // Criação de uma variável inteira de valor 11;
+
+
+void setup() { //Início da função setup
+
+ 
+  pinMode(buttonPin, INPUT);     // Configuração do pino(buttonPin) como entrada;
+  pinMode(ledPin1, OUTPUT);      // Configuração do pino(ledPin1) como saída;
+  pinMode(ledPin2, OUTPUT);      // Configuração do pino(ledPin2) como saída;
+  pinMode(ledPin3, OUTPUT);      // Configuração do pino(ledPin3) como saída;
+  pinMode(ledPin4, OUTPUT);      // Configuração do pino(ledPin4) como saída;
+  digitalWrite(buttonPin, HIGH); // Escreve no pino(buttonPin) o valor HIGH(1);
+}
+
+void loop(){ // Início da função loop
+
+  buttonState = digitalRead(buttonPin); // Guarda o valor lido no pino(buttonPin) na variável buttonState;
+
+  if (buttonState == LOW) { // Comando que checa valor armazenado na variável
+  // Se o valor for igual a um(HIGH):
+   digitalWrite(ledPin2, LOW); // Desliga o LED 2;
+   digitalWrite(ledPin1, LOW); // Desliga o LED 1;
+   delay(1000); // Espera 1 segundo;
+   digitalWrite(ledPin1, HIGH); // Liga o LED 1;
+   delay(500); // Espera 1 segundo;
+   digitalWrite(ledPin1,LOW); // Desliga o LED 1;
+   delay(500); // Espera 1 segundo;
+   digitalWrite(ledPin2, HIGH); // Liga o LED 2;
+   delay(500); // Espera 1 segundo;
+   digitalWrite(ledPin2, LOW); // Desliga o LED 2; 
+   delay(500); // Espera 1 segundo;
+   digitalWrite(ledPin1, HIGH); // Liga o LED 1;
+   digitalWrite(ledPin2, HIGH); // Liga o LED 2;
+   delay(500); // Espera 1 segundo;
+   digitalWrite(ledPin1, LOW); // Desliga o LED 1;
+   digitalWrite(ledPin2, LOW); // Desliga o LED 2;
+   delay(500); // Espera 1 segundo;
+   digitalWrite(ledPin3, HIGH); // Liga o LED 3;
+   delay(500); // Espera 1 segundo;
+   digitalWrite(ledPin3, LOW); // Desliga o LED 3;
+   delay(500); // Espera 1 segundo;
+   digitalWrite(ledPin3, HIGH); // Liga o LED 3;
+   digitalWrite(ledPin1, HIGH); // Liga o LED 1;
+   delay(500);  // Espera 1 segundo;
+   digitalWrite(ledPin3, LOW); // Desliga o LED 3;
+   digitalWrite(ledPin1, LOW); // Desliga o LED 1;
+   delay(500);    // Espera 1 segundo;
+   digitalWrite(ledPin3, HIGH); // Liga o LED 3;
+   digitalWrite(ledPin2, HIGH); // Liga o LED 2;
+   delay(500); // Espera 1 segundo;
+   digitalWrite(ledPin3, LOW); // Desliga o LED 3;
+   digitalWrite(ledPin2, LOW); // Desliga o LED 2;
+   delay(500); // Espera 1 segundo;
+   digitalWrite(ledPin3, HIGH); // Liga o LED 3;
+   digitalWrite(ledPin2, HIGH); // Liga o LED 2;
+   digitalWrite(ledPin1, HIGH); // Liga o LED 1; 
+   delay(500); // Espera 1 segundo;
+   digitalWrite(ledPin3, LOW); // Desliga o LED 3;
+   digitalWrite(ledPin2, LOW); // Desliga o LED 2;
+   digitalWrite(ledPin1, LOW); // Desliga o LED 1;
+   delay(500); // Espera 1 segundo;
+   digitalWrite(ledPin4, HIGH); // Liga o LED 4;
+   delay(500); // Espera 1 segundo;
+   digitalWrite(ledPin4, LOW); // Desliga o LED 4;
+   delay(500); // Espera 1 segundo;
+   digitalWrite(ledPin4, HIGH); // Liga o LED 4;
+   digitalWrite(ledPin1, HIGH); // Liga o LED 1;
+   delay(500); // Espera 1 segundo;
+   digitalWrite(ledPin4, LOW); // Desliga o LED 4;
+   digitalWrite(ledPin1, LOW); // Desliga o LED 1;
+   delay(500); // Espera 1 segundo;
+   digitalWrite(ledPin4, HIGH); // Liga o LED 4;
+   digitalWrite(ledPin2, HIGH); // Liga o LED 2;
+   delay(500); // Espera 1 segundo;
+   digitalWrite(ledPin4, LOW); // Desliga o LED 4; 
+   digitalWrite(ledPin2, LOW); // Desliga o LED 2;
+   delay(500); // Espera 1 segundo;
+   digitalWrite(ledPin4, HIGH); // Liga o LED 4;
+   digitalWrite(ledPin2, HIGH); // Liga o LED 2;
+   digitalWrite(ledPin1, HIGH); // Liga o LED 1;
+   delay(500); // Espera 1 segundo;
+   digitalWrite(ledPin4, LOW); // Desliga o LED 4;
+   digitalWrite(ledPin2, LOW); // Desliga o LED 2;
+   digitalWrite(ledPin1, LOW); // Desliga o LED 1;
+   delay(500); // Espera 1 segundo;
+   digitalWrite(ledPin4, HIGH); // Liga o LED 4;
+   digitalWrite(ledPin3, HIGH); // Liga o LED 3;
+   delay(500); // Espera 1 segundo;
+   digitalWrite(ledPin4, LOW); // Desliga o LED 4; 
+   digitalWrite(ledPin3, LOW); // Desliga o LED 3;
+   delay(500);  // Espera 1 segundo;
+   digitalWrite(ledPin4, HIGH); // Liga o LED 4;
+   digitalWrite(ledPin3, HIGH); // Liga o LED 3;
+   digitalWrite(ledPin1, HIGH); // Liga o LED 1;
+   delay(500); // Espera 1 segundo;
+   digitalWrite(ledPin4, LOW); // Desliga o LED 4; 
+   digitalWrite(ledPin3, LOW); // Desliga o LED 3;
+   digitalWrite(ledPin1, LOW); // Desliga o LED 1;
+   delay(500); // Espera 1 segundo;
+   digitalWrite(ledPin4, HIGH); // Liga o LED 4;
+   digitalWrite(ledPin3, HIGH); // Liga o LED 3;
+   digitalWrite(ledPin2, HIGH); // Liga o LED 2;
+   delay(500); // Espera 1 segundo;
+   digitalWrite(ledPin4, LOW); // Desliga o LED 4;
+   digitalWrite(ledPin3, LOW); // Desliga o LED 3;
+   digitalWrite(ledPin2, LOW); // Desliga o LED 2;
+   delay(500); // Espera 1 segundo;
+   digitalWrite(ledPin4, HIGH); // Liga o LED 4;
+   digitalWrite(ledPin3, HIGH); // Liga o LED 3;
+   digitalWrite(ledPin2, HIGH); // Liga o LED 2;
+   digitalWrite(ledPin1, HIGH); // Liga o LED 1;
+   delay(1000); // Espera 1 segundo;
+   digitalWrite(ledPin4, LOW); // Desliga o LED 4;
+   digitalWrite(ledPin3, LOW); // Desliga o LED 3;
+   digitalWrite(ledPin2, LOW); // Desliga o LED 2;
+   digitalWrite(ledPin1, LOW); // Desliga o LED 1;
+
+   
+  } 
+  else { // Se não, se o valor for igual a zero(LOW):
+   digitalWrite(ledPin1, HIGH); // Liga o LED
+   digitalWrite(ledPin2, HIGH); // Liga o LED
+   
+  }
+}
